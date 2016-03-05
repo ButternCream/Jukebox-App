@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JukeboxApp</string>
+    <string name="host_button_text">Host</string>
+    <string name="share_button_text">Share</string>
 </resources>
