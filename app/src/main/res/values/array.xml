@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="test">
+        <item>Test Item #1</item>
+        <item>Test Item #2</item>
+        <item>Test Item #3</item>
+    </string-array>
+</resources>

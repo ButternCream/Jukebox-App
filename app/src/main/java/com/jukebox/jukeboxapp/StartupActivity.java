@@ -35,10 +35,6 @@ public class StartupActivity extends AppCompatActivity {
                         Toast.makeText(StartupActivity.this, toastText, Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    case(BluetoothAdapter.STATE_TURNING_ON) :
-                    {
-                        setContentView(R.layout.host_startup);
-                    }
                     case(BluetoothAdapter.STATE_OFF) :
                     {
                         toastText = "Bluetooth off";
@@ -99,7 +95,15 @@ public class StartupActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.share_startup);
+                String actionStateChanged = BluetoothAdapter.ACTION_STATE_CHANGED;
+                String actionRequestEnable = BluetoothAdapter.ACTION_REQUEST_ENABLE;
+                IntentFilter filter = new IntentFilter(actionStateChanged);
+                registerReceiver(state, filter);
+                startActivityForResult(new Intent(actionRequestEnable), 0);
+                if (btAdapter.isEnabled())
+                {
+                    setContentView(R.layout.share_startup);
+                }
             }
         });//End share OnClick
 
