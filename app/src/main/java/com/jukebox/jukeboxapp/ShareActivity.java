@@ -1,6 +1,7 @@
 package com.jukebox.jukeboxapp;
 
 import android.app.ListActivity;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.session.MediaController;
 import android.os.Environment;
@@ -46,7 +47,9 @@ public class ShareActivity extends AppCompatActivity {
     private static final String MEDIA_PATH = Environment.getExternalStorageDirectory().toString()
             + "/Music/";
     private ArrayList<String> songs = new ArrayList<String>();
+    private ArrayList<String> song_meta_data = new ArrayList<String>();
     private MediaPlayer mp = new MediaPlayer();
+    private MediaMetadataRetriever mmr = new MediaMetadataRetriever();
     private int currentPosition = 0;
     private int previousPosition = currentPosition;
 //
@@ -108,6 +111,10 @@ public class ShareActivity extends AppCompatActivity {
         if (home.listFiles(new Mp3Filter()).length > 0) {
             for (File file : home.listFiles(new Mp3Filter())) {
                 songs.add(file.getName());
+                mmr.setDataSource(MEDIA_PATH + file.getName());
+                String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                song_meta_data.add(artist + " - " + title);
             }
 
             //ArrayAdapter<String> songList = new ArrayAdapter<String>(this,
@@ -125,7 +132,7 @@ public class ShareActivity extends AppCompatActivity {
         setContentView(R.layout.music_list);
         updateSongList();
         List = (ListView) findViewById(R.id.music_files);
-        List.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, songs));
+        List.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, song_meta_data));
         List.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override

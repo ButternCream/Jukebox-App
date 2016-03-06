@@ -114,8 +114,8 @@ public class StartupActivity extends AppCompatActivity {
                 startActivityForResult(new Intent(actionRequestEnable), 0);
                 if (btAdapter.isEnabled()) {
                     //CHANGE THIS
-                    //Intent share= new Intent(StartupActivity.this, ShareActivity.class);
-                    //StartupActivity.this.startActivity(share);
+                    Intent share= new Intent(StartupActivity.this, ShareActivity.class);
+                    StartupActivity.this.startActivity(share);
                 }
             }
         });//End share OnClick
