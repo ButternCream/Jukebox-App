@@ -1,25 +1,39 @@
 package com.jukebox.jukeboxapp;
 
+import android.app.ActionBar;
+import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class StartupActivity extends AppCompatActivity {
     private Button hostButton;
     private Button shareButton;
 
+
     //Initialize bluetooth adapter
     private BluetoothAdapter btAdapter;
 
     //Get the state of the bluetooth device and return it
-    public BroadcastReceiver getBluetoothState(){
+    public BroadcastReceiver getBluetoothState() {
         BroadcastReceiver bluetoothState = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -28,15 +42,13 @@ public class StartupActivity extends AppCompatActivity {
                 int state = intent.getIntExtra(stateExtra, -1);
                 //int previous_state = intent.getIntExtra(prevStateExtra, -1);
                 String toastText = "";
-                switch(state){
-                    case(BluetoothAdapter.STATE_ON) :
-                    {
+                switch (state) {
+                    case (BluetoothAdapter.STATE_ON): {
                         toastText = "Bluetooth on";
                         Toast.makeText(StartupActivity.this, toastText, Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    case(BluetoothAdapter.STATE_OFF) :
-                    {
+                    case (BluetoothAdapter.STATE_OFF): {
                         toastText = "Bluetooth off";
                         Toast.makeText(StartupActivity.this, toastText, Toast.LENGTH_SHORT).show();
                         break;
@@ -48,10 +60,9 @@ public class StartupActivity extends AppCompatActivity {
     }// End get bluetooth state
 
     //Check the bluetooth state
-    public void checkBluetoothState(){
+    public void checkBluetoothState() {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (btAdapter.isEnabled())
-        {
+        if (btAdapter.isEnabled()) {
             String address = btAdapter.getAddress();
             String name = btAdapter.getName();
             String status = name + " : " + address;
@@ -63,17 +74,19 @@ public class StartupActivity extends AppCompatActivity {
     } //End check bluetooth state
 
 
+
     // The OnCreate method to initialize the app
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
 
+
         //Setup variables & run functions
         final BroadcastReceiver state = getBluetoothState();
         checkBluetoothState();
-        hostButton = (Button)findViewById(R.id.host_button);
-        shareButton = (Button)findViewById(R.id.share_button);
+        hostButton = (Button) findViewById(R.id.host_button);
+        shareButton = (Button) findViewById(R.id.share_button);
 
         //Host button onClick listener
         hostButton.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +97,7 @@ public class StartupActivity extends AppCompatActivity {
                 IntentFilter filter = new IntentFilter(actionStateChanged);
                 registerReceiver(state, filter);
                 startActivityForResult(new Intent(actionRequestEnable), 0);
-               if (btAdapter.isEnabled())
-                {
+                if (btAdapter.isEnabled()) {
                     setContentView(R.layout.host_startup);
                 }
             }
@@ -100,13 +112,13 @@ public class StartupActivity extends AppCompatActivity {
                 IntentFilter filter = new IntentFilter(actionStateChanged);
                 registerReceiver(state, filter);
                 startActivityForResult(new Intent(actionRequestEnable), 0);
-                if (btAdapter.isEnabled())
-                {
-                    setContentView(R.layout.share_startup);
+                if (btAdapter.isEnabled()) {
+                    Intent share= new Intent(StartupActivity.this, ShareActivity.class);
+                    StartupActivity.this.startActivity(share);
                 }
             }
         });//End share OnClick
 
-
     }
 }
+
