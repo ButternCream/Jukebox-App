@@ -2,13 +2,17 @@ package com.jukebox.jukeboxapp;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.session.MediaController;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -127,11 +131,25 @@ public class ShareActivity extends AppCompatActivity {
     }
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music_list);
+
+
+        //Intent intent = getIntent();
+        //String name = intent.getStringExtra("name");
+
+
+        // CREATES TOOLBAR
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
         updateSongList();
         List = (ListView) findViewById(R.id.music_files);
         List.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, song_meta_data));
@@ -145,6 +163,15 @@ public class ShareActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 //        String path = Environment.getExternalStorageDirectory().toString();
 //        //Log.d("Files", "Path:" + path);
 //

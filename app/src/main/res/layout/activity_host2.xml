@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.jukebox.jukeboxapp.ShareActivity">
+    tools:context="com.jukebox.jukeboxapp.HostActivity2">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,6 +21,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <include layout="@layout/content_host2" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -29,14 +31,29 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_dialog_email" />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <ListView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Session Name"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:textSize="50dp" />
+
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/music_files"
-            android:layout_gravity="center_horizontal"/>
+            android:id="@+id/host_name" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Continue"
+            android:id="@+id/session_continue"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>
