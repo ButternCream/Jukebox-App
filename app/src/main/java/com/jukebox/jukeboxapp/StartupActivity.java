@@ -1,28 +1,18 @@
 package com.jukebox.jukeboxapp;
 
-import android.app.ActionBar;
-import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import com.ramimartin.multibluetooth.bluetooth.client.BluetoothClient;
+import com.ramimartin.multibluetooth.bluetooth.client.BluetoothConnector;
 
 public class StartupActivity extends AppCompatActivity {
     private Button hostButton;
@@ -100,7 +90,15 @@ public class StartupActivity extends AppCompatActivity {
                 if (btAdapter.isEnabled()) {
                     setContentView(R.layout.host_startup);
                 }
+                MultiBTActivity activity = new MultiBTActivity();
+                activity.onBluetoothStartDiscovery();
+                BluetoothClient client = new BluetoothClient(btAdapter, btAdapter.getAddress());
+
+                client.run();
+                BluetoothConnector connector = new BluetoothConnector(client.mBluetoothDevice);
             }
+
+
         }); //End host OnClick
 
         //Share button OnClick listener
@@ -117,6 +115,7 @@ public class StartupActivity extends AppCompatActivity {
                     //Intent share= new Intent(StartupActivity.this, ShareActivity.class);
                     //StartupActivity.this.startActivity(share);
                 }
+
             }
         });//End share OnClick
 
