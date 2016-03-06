@@ -6,7 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.v7.app.AppCompatActivity;
+=======
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+>>>>>>> 4fd3804371a30cb9c793a8d305556eb93febea47
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -72,6 +77,7 @@ public class StartupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_startup);
 
 
+
         //Setup variables & run functions
         final BroadcastReceiver state = getBluetoothState();
         checkBluetoothState();
@@ -88,7 +94,9 @@ public class StartupActivity extends AppCompatActivity {
                 registerReceiver(state, filter);
                 startActivityForResult(new Intent(actionRequestEnable), 0);
                 if (btAdapter.isEnabled()) {
-                    setContentView(R.layout.host_startup);
+                    //setContentView(R.layout.host_startup);
+                    Intent host = new Intent(StartupActivity.this, HostActivity2.class);
+                    StartupActivity.this.startActivity(host);
                 }
                 MultiBTActivity activity = new MultiBTActivity();
                 activity.onBluetoothStartDiscovery();
@@ -111,9 +119,9 @@ public class StartupActivity extends AppCompatActivity {
                 registerReceiver(state, filter);
                 startActivityForResult(new Intent(actionRequestEnable), 0);
                 if (btAdapter.isEnabled()) {
-                    //CHANGE THIS
-                    //Intent share= new Intent(StartupActivity.this, ShareActivity.class);
-                    //StartupActivity.this.startActivity(share);
+                    Intent share= new Intent(StartupActivity.this, devicesActivity.class);
+                    StartupActivity.this.startActivity(share);
+
                 }
 
             }
