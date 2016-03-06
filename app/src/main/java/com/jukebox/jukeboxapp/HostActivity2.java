@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.jukebox.jukeboxapp.Client.BluetoothConnector;
 import com.jukebox.jukeboxapp.Manager.BluetoothManager;
@@ -17,6 +18,8 @@ import com.jukebox.jukeboxapp.Server.BluetoothServer;
 
 public class HostActivity2 extends AppCompatActivity {
     private Button continueBTN;
+    public static String con_Name;
+    private EditText host;
     //BluetoothAdapter btAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +44,14 @@ public class HostActivity2 extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         continueBTN = (Button) findViewById(R.id.session_continue);
+        continueBTN.setText("Continue");
+        host = (EditText)findViewById(R.id.host_name);
 
         continueBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent music = new Intent(HostActivity2.this, ShareActivity.class);
+                con_Name = host.getText().toString();
+                Intent music = new Intent(HostActivity2.this, setupActivity.class);
                 HostActivity2.this.startActivity(music);
             }
         });

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.jukebox.jukeboxapp.HostActivity2">
+    tools:context="com.jukebox.jukeboxapp.setupActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_host2" />
+    <include layout="@layout/content_setup" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -30,30 +30,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_dialog_email" />
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="New Text"
-            android:id="@+id/textView"
-            android:layout_gravity="center_horizontal"
-            android:textSize="50dp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/host_name" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/session_continue"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
