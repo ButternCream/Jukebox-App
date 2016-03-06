@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -82,6 +83,7 @@ public class StartupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_startup);
 
 
+
         //Setup variables & run functions
         final BroadcastReceiver state = getBluetoothState();
         checkBluetoothState();
@@ -98,8 +100,8 @@ public class StartupActivity extends AppCompatActivity {
                 registerReceiver(state, filter);
                 startActivityForResult(new Intent(actionRequestEnable), 0);
                 if (btAdapter.isEnabled()) {
-                    setContentView(R.layout.host_startup);
-                    Intent host = new Intent(StartupActivity.this, HostActivity.class);
+                    //setContentView(R.layout.host_startup);
+                    Intent host = new Intent(StartupActivity.this, HostActivity2.class);
                     StartupActivity.this.startActivity(host);
                 }
             }
@@ -117,6 +119,7 @@ public class StartupActivity extends AppCompatActivity {
                 if (btAdapter.isEnabled()) {
                     Intent share= new Intent(StartupActivity.this, devicesActivity.class);
                     StartupActivity.this.startActivity(share);
+
                 }
             }
         });//End share OnClick
