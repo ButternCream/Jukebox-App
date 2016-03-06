@@ -1,5 +1,7 @@
 package com.jukebox.jukeboxapp;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,12 +11,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
+import com.jukebox.jukeboxapp.Client.BluetoothConnector;
+import com.jukebox.jukeboxapp.Manager.BluetoothManager;
+import com.jukebox.jukeboxapp.Server.BluetoothServer;
+
 public class HostActivity2 extends AppCompatActivity {
     private Button continueBTN;
+    //BluetoothAdapter btAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host2);
+
+//        btAdapter = BluetoothAdapter.getDefaultAdapter();
+//
+//        MultiBTActivity activity = new MultiBTActivity();
+//        activity.onBluetoothStartDiscovery();
+//
+//        BluetoothServer server = new BluetoothServer(btAdapter, btAdapter.getAddress());
+//
+//        BluetoothManager manager = new BluetoothManager(activity);
+//        manager.setTimeDiscoverable(BluetoothManager.BLUETOOTH_TIME_DICOVERY_3600_SEC);
+//        manager.selectServerMode();
+//        manager.scanAllBluetoothDevice();
+//        manager.createClient(server.getServerAddress());
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

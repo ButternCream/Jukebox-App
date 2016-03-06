@@ -28,6 +28,10 @@ public class BluetoothServer implements Runnable {
     private InputStream mInputStream;
     private OutputStreamWriter mOutputStreamWriter;
 
+    public String getServerAddress(){
+        return mBluetoothAdapter.getAddress();
+    }
+
     public BluetoothServer(BluetoothAdapter bluetoothAdapter, String clientAddress) {
         this.mBluetoothAdapter = bluetoothAdapter;
         this.mClientAddress = clientAddress;

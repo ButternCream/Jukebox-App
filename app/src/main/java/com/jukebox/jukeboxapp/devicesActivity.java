@@ -18,6 +18,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.jukebox.jukeboxapp.Client.BluetoothClient;
+import com.jukebox.jukeboxapp.Manager.BluetoothManager;
+import com.ramimartin.multibluetooth.bluetooth.client.BluetoothConnector;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
@@ -27,10 +31,25 @@ public class devicesActivity extends AppCompatActivity {
     ArrayList<BluetoothDevice> allDevices = new ArrayList<BluetoothDevice>();
     ArrayList<String>allDeviceNames = new ArrayList<String>();
     ListView list;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
+
+//        MultiBTActivity activity = new MultiBTActivity();
+//        activity.onBluetoothStartDiscovery();
+//        BluetoothClient client = new BluetoothClient(adapter, adapter.getAddress());
+//
+//        client.run();
+//        BluetoothConnector connector = new BluetoothConnector(client.getbluetoothdevice(), true, client.getbluetoothadapter(), client.getuuid());
+//        BluetoothManager manager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
+//        manager.setTimeDiscoverable(BluetoothManager.BLUETOOTH_TIME_DICOVERY_120_SEC);
+//        manager.selectClientMode();
+//        manager.createClient(client.getadressmac());
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -43,6 +62,7 @@ public class devicesActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         clearPairs();
+
 
 
         //SCAN FOR BLUETOOTH DEVIDES

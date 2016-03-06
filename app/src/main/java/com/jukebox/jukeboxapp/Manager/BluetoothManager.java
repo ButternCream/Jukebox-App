@@ -224,7 +224,7 @@ public class BluetoothManager extends BroadcastReceiver {
             bluetoothServerMap = (Entry)i$.next();
         } while(!addressClientConnected.equals(((BluetoothServer)bluetoothServerMap.getValue()).getClientAddress()));
 
-        this.mServeurConnectedList.add(bluetoothServerMap.getValue());
+        this.mServeurConnectedList.add((BluetoothServer)(bluetoothServerMap.getValue()));
         this.incrementNbrConnection();
         Log.e("", "===> onServerConnectionSuccess address : " + addressClientConnected);
     }

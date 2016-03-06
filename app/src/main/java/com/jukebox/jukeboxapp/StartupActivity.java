@@ -117,17 +117,8 @@ public class StartupActivity extends AppCompatActivity {
                 if (btAdapter.isEnabled()) {
                     Intent share= new Intent(StartupActivity.this, devicesActivity.class);
                     StartupActivity.this.startActivity(share);
-
                 }
-                MultiBTActivity activity = new MultiBTActivity();
-                activity.onBluetoothStartDiscovery();
-                BluetoothClient client = new BluetoothClient(btAdapter, btAdapter.getAddress());
 
-                client.run();
-                BluetoothConnector connector = new BluetoothConnector(client.getbluetoothdevice(), true, client.getbluetoothadapter(), client.getuuid());
-                BluetoothManager manager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
-                manager.setTimeDiscoverable(BluetoothManager.BLUETOOTH_TIME_DICOVERY_120_SEC);
-                manager.selectClientMode();
             }
         });//End share OnClick
 
