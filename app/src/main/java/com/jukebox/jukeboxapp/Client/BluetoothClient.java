@@ -126,7 +126,7 @@ public class BluetoothClient implements Runnable {
     public String getadressmac() {
         return this.mAdressMac;
     }
-    public BluetoothSocket getblluetoothsocket() {
+    public BluetoothSocket getbluetoothsocket() {
         return this.mSocket;
     }
     public BluetoothConnector getbluetoothconnector() {

@@ -6,18 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-<<<<<<< HEAD
+
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
-=======
+
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
->>>>>>> 4fd3804371a30cb9c793a8d305556eb93febea47
+import com.jukebox.jukeboxapp.Manager.BluetoothManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.ramimartin.multibluetooth.bluetooth.client.BluetoothClient;
 import com.ramimartin.multibluetooth.bluetooth.client.BluetoothConnector;
+import com.jukebox.jukeboxapp.Client.BluetoothClient;
 
 public class StartupActivity extends AppCompatActivity {
     private Button hostButton;
@@ -98,12 +99,7 @@ public class StartupActivity extends AppCompatActivity {
                     Intent host = new Intent(StartupActivity.this, HostActivity2.class);
                     StartupActivity.this.startActivity(host);
                 }
-                MultiBTActivity activity = new MultiBTActivity();
-                activity.onBluetoothStartDiscovery();
-                BluetoothClient client = new BluetoothClient(btAdapter, btAdapter.getAddress());
 
-                client.run();
-                BluetoothConnector connector = new BluetoothConnector(client.mBluetoothDevice);
             }
 
 
@@ -123,7 +119,15 @@ public class StartupActivity extends AppCompatActivity {
                     StartupActivity.this.startActivity(share);
 
                 }
+                MultiBTActivity activity = new MultiBTActivity();
+                activity.onBluetoothStartDiscovery();
+                BluetoothClient client = new BluetoothClient(btAdapter, btAdapter.getAddress());
 
+                client.run();
+                BluetoothConnector connector = new BluetoothConnector(client.getbluetoothdevice(), true, client.getbluetoothadapter(), client.getuuid());
+                BluetoothManager manager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
+                manager.setTimeDiscoverable(BluetoothManager.BLUETOOTH_TIME_DICOVERY_120_SEC);
+                manager.selectClientMode();
             }
         });//End share OnClick
 
