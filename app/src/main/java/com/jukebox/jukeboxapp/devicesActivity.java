@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class devicesActivity extends AppCompatActivity {
     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
@@ -40,6 +42,8 @@ public class devicesActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        clearPairs();
+
 
         //SCAN FOR BLUETOOTH DEVIDES
         IntentFilter filter = new IntentFilter();
@@ -65,10 +69,10 @@ public class devicesActivity extends AppCompatActivity {
             String action = intent.getAction();
 
             if(BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)){
-              //  Toast.makeText(devicesActivity.this,"DISCOVERY STARTED",Toast.LENGTH_LONG).show();
+                Toast.makeText(devicesActivity.this,"Searching...",Toast.LENGTH_LONG).show();
             }
             else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)){
-               // Toast.makeText(devicesActivity.this,"DISCOVERY FINISHED",Toast.LENGTH_LONG).show();
+                Toast.makeText(devicesActivity.this,"Done.",Toast.LENGTH_LONG).show();
              //   Toast.makeText(devicesActivity.this,String.valueOf(allDevices.size()), Toast.LENGTH_SHORT).show();
                 allDeviceNames = getNames(allDevices);
                 list = (ListView)findViewById(R.id.allDevices);
@@ -105,6 +109,8 @@ public class devicesActivity extends AppCompatActivity {
         try{
             Method method = device.getClass().getMethod("createBond",(Class[]) null);
             method.invoke(device,(Object[])null);
+            Toast.makeText(devicesActivity.this,device.getName(),Toast.LENGTH_LONG).show();
+
 
 
         }
@@ -134,6 +140,9 @@ public class devicesActivity extends AppCompatActivity {
                 final int prevState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE,BluetoothDevice.ERROR);
                 if(state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING){
                     Toast.makeText(devicesActivity.this,"PAIRED",Toast.LENGTH_LONG).show();
+                    setContentView(R.layout.music_list);
+                    Intent musicLib = new Intent(devicesActivity.this, ShareActivity.class);
+                    devicesActivity.this.startActivity(musicLib);
                 }
                 else if(state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
                     Toast.makeText(devicesActivity.this,"UNPAIRED",Toast.LENGTH_LONG).show();
@@ -143,5 +152,21 @@ public class devicesActivity extends AppCompatActivity {
         }
     };
 
+    void clearPairs(){
+        Set<BluetoothDevice> pairedDevices = adapter.getBondedDevices();
+        if(pairedDevices.size() >0){
+            for(BluetoothDevice device : pairedDevices){
+                try{
+                    unpairDevice(device);
+                }
+                catch (Exception e){
+                    Log.e("failed",e.getMessage());
+                }
+            }
+        }
+    }
+
 
 }
+
+
