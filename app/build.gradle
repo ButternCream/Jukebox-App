@@ -23,6 +23,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
 
     compile files('src/main/java/Libs/AndroidMultiBluetoothLibrary-1.1-20150330.103251-1.jar')
     compile 'com.android.support:design:23.2.0'
