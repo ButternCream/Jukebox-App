@@ -1,6 +1,8 @@
 package com.jukebox.jukeboxapp;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothServerSocket;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,18 +12,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.jukebox.jukeboxapp.Client.BluetoothConnector;
 import com.jukebox.jukeboxapp.Manager.BluetoothManager;
 import com.jukebox.jukeboxapp.Server.BluetoothServer;
 
+import java.io.IOException;
+import java.util.UUID;
+
 public class HostActivity2 extends AppCompatActivity {
     private Button continueBTN;
-    //BluetoothAdapter btAdapter;
+    public static String conName_var;
+    private EditText host;
+//    BluetoothAdapter btAdapter;
+//    private static final UUID MY_UUID = UUID.fromString("20687DAD-B023-F19E-2F60-A135554CC3FD");
+//    BluetoothServerSocket serverSocket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host2);
+        host = (EditText) findViewById(R.id.host_name);
+
+
+
+//        btAdapter = BluetoothAdapter.getDefaultAdapter();
+//        btAdapter.startDiscovery();
+//        try {
+//            serverSocket = btAdapter.listenUsingRfcommWithServiceRecord("MyBluetoothService", MY_UUID);
+//        } catch(IOException ex){
+//            System.out.println("test");
+//        }
+//        try {
+//            BluetoothSocket socket = serverSocket.accept();
+//        } catch(IOException ex)
+//        {
+//            System.out.println("test");
+//        }
 
 //        btAdapter = BluetoothAdapter.getDefaultAdapter();
 //
@@ -45,7 +72,8 @@ public class HostActivity2 extends AppCompatActivity {
         continueBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent music = new Intent(HostActivity2.this, ShareActivity.class);
+                conName_var = host.getText().toString();
+                Intent music = new Intent(HostActivity2.this, setupActivity.class);
                 HostActivity2.this.startActivity(music);
             }
         });

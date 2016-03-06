@@ -2,13 +2,17 @@ package com.jukebox.jukeboxapp;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothServerSocket;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,21 +26,27 @@ import com.jukebox.jukeboxapp.Client.BluetoothClient;
 import com.jukebox.jukeboxapp.Manager.BluetoothManager;
 import com.ramimartin.multibluetooth.bluetooth.client.BluetoothConnector;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 
 public class devicesActivity extends AppCompatActivity {
     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     ArrayList<BluetoothDevice> allDevices = new ArrayList<BluetoothDevice>();
     ArrayList<String>allDeviceNames = new ArrayList<String>();
     ListView list;
+    //private static final UUID MY_UUID = UUID.fromString("20687DAD-B023-F19E-2F60-A135554CC3FD");
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
+
+        //final File file = new File()
 
 //        MultiBTActivity activity = new MultiBTActivity();
 //        activity.onBluetoothStartDiscovery();
@@ -65,12 +75,13 @@ public class devicesActivity extends AppCompatActivity {
 
 
 
-        //SCAN FOR BLUETOOTH DEVIDES
+        //SCAN FOR BLUETOOTH DEVICES
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_FOUND);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         registerReceiver(mReceiver, filter);
+        adapter.cancelDiscovery();
         adapter.startDiscovery();
         //DISPLAY SCANNED DEVICES TO LISTVIEW
         list = (ListView)findViewById(R.id.allDevices);
@@ -100,7 +111,12 @@ public class devicesActivity extends AppCompatActivity {
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //Toast.makeText(devicesActivity.this,allDevices.get(position).getName(),Toast.LENGTH_SHORT).show();
+//                        try {
+//                            BluetoothSocket socket = allDevices.get(position).createRfcommSocketToServiceRecord(MY_UUID);
+//                        } catch (IOException ex){
+//                            System.out.print("test");
+//                        }
+                        Toast.makeText(devicesActivity.this,allDevices.get(position).getAddress(),Toast.LENGTH_SHORT).show();
                         pairDevice(allDevices.get(position));
                     }
                 });

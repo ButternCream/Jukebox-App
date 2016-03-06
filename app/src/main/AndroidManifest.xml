@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jukebox.jukeboxapp">
+<manifest package="com.jukebox.jukeboxapp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -12,34 +12,62 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.jukebox.jukeboxapp.devicesActivity"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
         <activity android:name=".StartupActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ShareActivity"
+        <activity
+            android:name=".ShareActivity"
             android:label="@string/title_shared_activity"
-            android:parentActivityName=".HostActivity2"
+            android:parentActivityName=".devicesActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".devicesActivity"
             android:label="@string/title_activity_devices"
             android:parentActivityName=".StartupActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.PICK"/>
+                <category
+                    android:name="android.intent.category.DEFAULT"/>
+                <category
+                    android:name="android.intent.category.OPENABLE"/>
+                <data android:mimeType="audio/mp3"/>
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jukebox.jukeboxapp.StartupActivity" />
+                android:value="com.jukebox.jukeboxapp.StartupActivity"/>
         </activity>
         <activity
             android:name=".HostActivity2"
             android:label="@string/title_activity_host2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".StartupActivity">
+            android:parentActivityName=".StartupActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
-
+        <activity
+            android:name=".setupActivity"
+            android:label="@string/title_activity_setup"
+            android:parentActivityName=".HostActivity2"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jukebox.jukeboxapp.HostActivity2"/>
+        </activity>
     </application>
 
 </manifest>
