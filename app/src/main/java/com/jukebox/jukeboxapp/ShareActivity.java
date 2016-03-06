@@ -33,7 +33,7 @@ public class ShareActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.share_startup);
+        setContentView(R.layout.music_list);
 
         String path = Environment.getExternalStorageDirectory().toString();
         //Log.d("Files", "Path:" + path);
@@ -41,7 +41,7 @@ public class ShareActivity extends AppCompatActivity {
         //File f = new File(path + "/Music");
         //File[] list = f.listFiles();
         //View inflatedView = getLayoutInflater().inflate(R.layout.share_startup, null);
-        List = (ListView) findViewById(R.id.devices_list);
+        List = (ListView) findViewById(R.id.music_files);
         //text.setText("Hello!");
         ArrayList<String> filesinfolder = GetFiles(path + "/Music");
         //List = (ListView)findViewById(R.id.devices_list);
