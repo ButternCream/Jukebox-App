@@ -99,6 +99,8 @@ public class StartupActivity extends AppCompatActivity {
                 startActivityForResult(new Intent(actionRequestEnable), 0);
                 if (btAdapter.isEnabled()) {
                     setContentView(R.layout.host_startup);
+                    Intent host = new Intent(StartupActivity.this, HostActivity.class);
+                    StartupActivity.this.startActivity(host);
                 }
             }
         }); //End host OnClick
@@ -113,7 +115,7 @@ public class StartupActivity extends AppCompatActivity {
                 registerReceiver(state, filter);
                 startActivityForResult(new Intent(actionRequestEnable), 0);
                 if (btAdapter.isEnabled()) {
-                    Intent share= new Intent(StartupActivity.this, ShareActivity.class);
+                    Intent share= new Intent(StartupActivity.this, devicesActivity.class);
                     StartupActivity.this.startActivity(share);
                 }
             }
