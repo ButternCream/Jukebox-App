@@ -55,30 +55,23 @@ public class ShareActivity extends AppCompatActivity {
     private void playSong(String songPath) {
         try {
 
-            if (previousPosition == currentPosition && mp.isPlaying())
-            {
-                mp.pause();
-            }
-            else if (previousPosition != currentPosition && mp.isPlaying())
-            {
-                mp.pause();
-                mp.reset();
-                mp.setDataSource(songPath);
-                mp.prepare();
-                mp.start();
-            }
-            else{
-                mp.reset();
-                mp.setDataSource(songPath);
-                mp.prepare();
-                mp.start();
-            }
-//            else{
+//            if (previousPosition == currentPosition && mp.isPlaying())
+//            {
+//                mp.pause();
+//            }
+//            else if (previousPosition != currentPosition && mp.isPlaying())
+//            {
+//                mp.pause();
 //                mp.reset();
 //                mp.setDataSource(songPath);
 //                mp.prepare();
 //                mp.start();
 //            }
+//            else{
+                mp.reset();
+                mp.setDataSource(songPath);
+                mp.prepare();
+                mp.start();
 
 
             // Setup listener so next song starts automatically
@@ -151,8 +144,11 @@ public class ShareActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(mp.isPlaying()){
+                    mp.pause();
+                } else{
+                    mp.start();
+                }
             }
         });
 //        String path = Environment.getExternalStorageDirectory().toString();

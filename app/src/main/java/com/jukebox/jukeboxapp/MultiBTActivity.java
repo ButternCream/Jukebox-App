@@ -10,7 +10,7 @@ public class MultiBTActivity extends BluetoothActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.host_startup);
+        //setContentView(R.layout.host_startup);
     }
 
     @Override

@@ -2,17 +2,13 @@ package com.jukebox.jukeboxapp;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
-import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,20 +17,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.jukebox.jukeboxapp.Client.BluetoothClient;
-import com.jukebox.jukeboxapp.Manager.BluetoothManager;
-import com.ramimartin.multibluetooth.bluetooth.client.BluetoothConnector;
-
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.UUID;
 
 public class devicesActivity extends AppCompatActivity {
-    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+    BluetoothAdapter adapter;
     ArrayList<BluetoothDevice> allDevices = new ArrayList<BluetoothDevice>();
     ArrayList<String>allDeviceNames = new ArrayList<String>();
     ListView list;
@@ -45,20 +33,7 @@ public class devicesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
-
-        //final File file = new File()
-
-//        MultiBTActivity activity = new MultiBTActivity();
-//        activity.onBluetoothStartDiscovery();
-//        BluetoothClient client = new BluetoothClient(adapter, adapter.getAddress());
-//
-//        client.run();
-//        BluetoothConnector connector = new BluetoothConnector(client.getbluetoothdevice(), true, client.getbluetoothadapter(), client.getuuid());
-//        BluetoothManager manager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
-//        manager.setTimeDiscoverable(BluetoothManager.BLUETOOTH_TIME_DICOVERY_120_SEC);
-//        manager.selectClientMode();
-//        manager.createClient(client.getadressmac());
-
+        adapter = BluetoothAdapter.getDefaultAdapter();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,7 +46,12 @@ public class devicesActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toast.makeText(devicesActivity.this, Integer.toString(adapter.getState()), Toast.LENGTH_LONG).show();
+
         clearPairs();
+
+        Toast.makeText(devicesActivity.this,"Cleared Pairs",Toast.LENGTH_LONG).show();
+
 
 
 
@@ -81,10 +61,10 @@ public class devicesActivity extends AppCompatActivity {
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         registerReceiver(mReceiver, filter);
-        adapter.cancelDiscovery();
+        //adapter.cancelDiscovery();
         adapter.startDiscovery();
         //DISPLAY SCANNED DEVICES TO LISTVIEW
-        list = (ListView)findViewById(R.id.allDevices);
+        list = (ListView)findViewById(R.id.BTallDevices);
 
 
 
@@ -100,22 +80,17 @@ public class devicesActivity extends AppCompatActivity {
             String action = intent.getAction();
 
             if(BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)){
-                Toast.makeText(devicesActivity.this,"Searching...",Toast.LENGTH_LONG).show();
+                Toast.makeText(devicesActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
             }
             else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)){
                 Toast.makeText(devicesActivity.this,"Done.",Toast.LENGTH_LONG).show();
              //   Toast.makeText(devicesActivity.this,String.valueOf(allDevices.size()), Toast.LENGTH_SHORT).show();
                 allDeviceNames = getNames(allDevices);
-                list = (ListView)findViewById(R.id.allDevices);
-                list.setAdapter(new ArrayAdapter<String>(devicesActivity.this, android.R.layout.simple_list_item_1, allDeviceNames));
+                //list = (ListView)findViewById(R.id.allDevices);
+                list.setAdapter(new ArrayAdapter<String>(devicesActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1 , allDeviceNames));
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        try {
-//                            BluetoothSocket socket = allDevices.get(position).createRfcommSocketToServiceRecord(MY_UUID);
-//                        } catch (IOException ex){
-//                            System.out.print("test");
-//                        }
                         Toast.makeText(devicesActivity.this,allDevices.get(position).getAddress(),Toast.LENGTH_SHORT).show();
                         pairDevice(allDevices.get(position));
                     }
@@ -124,19 +99,28 @@ public class devicesActivity extends AppCompatActivity {
             }
             else if(BluetoothDevice.ACTION_FOUND.equals(action)){
                 //Toast.makeText(devicesActivity.this,"DEVICE FOUND",Toast.LENGTH_LONG).show();
-                BluetoothDevice device = (BluetoothDevice)intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                allDevices.add(device);
-                //Toast.makeText(devicesActivity.this,device.getName(),Toast.LENGTH_LONG).show();
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if (device.getName() != null){
+                    allDevices.add(device);
+                    Toast.makeText(devicesActivity.this,device.getName(),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(devicesActivity.this,"NULL",Toast.LENGTH_SHORT).show();
+                }
             }
         }
     };
 
     private ArrayList<String> getNames(ArrayList<BluetoothDevice> devices){
-        ArrayList<String> names = new ArrayList<String>();
+        allDeviceNames = new ArrayList<String>();
         for(int i =0;i <devices.size(); i++) {
-            names.add(devices.get(i).getName());
+            if (devices.get(i) != null){
+                allDeviceNames.add(devices.get(i).getName());
+                Toast.makeText(devicesActivity.this, "Added: " + allDeviceNames.get(i), Toast.LENGTH_LONG).show();
+            }
+
         }
-        return names;
+        Toast.makeText(devicesActivity.this,"Returning device names",Toast.LENGTH_LONG).show();
+        return allDeviceNames;
     }
 
 
@@ -146,8 +130,6 @@ public class devicesActivity extends AppCompatActivity {
             Method method = device.getClass().getMethod("createBond",(Class[]) null);
             method.invoke(device,(Object[])null);
             Toast.makeText(devicesActivity.this,device.getName(),Toast.LENGTH_LONG).show();
-
-
 
         }
         catch(Exception e){
