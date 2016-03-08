@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -34,7 +38,8 @@
             android:name=".ShareActivity"
             android:label="@string/title_shared_activity"
             android:parentActivityName=".devicesActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme"/>
+        <service android:name="com.jukebox.jukeboxapp.MusicService" />
         <activity
             android:name=".devicesActivity"
             android:label="@string/title_activity_devices"
@@ -68,6 +73,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jukebox.jukeboxapp.HostActivity2"/>
         </activity>
+
     </application>
 
 </manifest>

@@ -37,7 +37,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/music_files"
-            android:layout_gravity="center_horizontal"/>
+            android:id="@+id/music_files" />
+
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
